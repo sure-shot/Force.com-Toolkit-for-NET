@@ -1,25 +1,34 @@
 install:
-    - cmd: dotnet restore .\src\Salesforce.Chatter
-    - cmd: dotnet restore .\src\Salesforce.Common
-    - cmd: dotnet restore .\src\Salesforce.Common.UnitTests
-    - cmd: dotnet restore .\src\Salesforce.Force
-    - cmd: dotnet restore .\src\Salesforce.Force.UnitTests
+  - cmd: dotnet restore .\src\Salesforce.Chatter
+  - cmd: dotnet restore .\src\Salesforce.Common
+  - cmd: dotnet restore .\src\Salesforce.Common.UnitTests
+  - cmd: dotnet restore .\src\Salesforce.Force
+  - cmd: dotnet restore .\src\Salesforce.Force.UnitTests
 
 build_script:
-    - cmd: dotnet build -c Release .\src\Salesforce.Chatter
-    - cmd: dotnet build -c Release .\src\Salesforce.Common
-    - cmd: dotnet build -c Release .\src\Salesforce.Common.UnitTests
-    - cmd: dotnet build -c Release .\src\Salesforce.Force
-    - cmd: dotnet build -c Release .\src\Salesforce.Force.UnitTests
+  - cmd: dotnet build -c Release .\src\Salesforce.Chatter
+  - cmd: dotnet build -c Release .\src\Salesforce.Common
+  - cmd: dotnet build -c Release .\src\Salesforce.Common.UnitTests
+  - cmd: dotnet build -c Release .\src\Salesforce.Force
+  - cmd: dotnet build -c Release .\src\Salesforce.Force.UnitTests
 
 test_script:
-    - cmd: dotnet test .\src\Salesforce.Common.UnitTests
-    - cmd: dotnet test .\src\Salesforce.Force.UnitTests
+  - cmd: dotnet test .\src\Salesforce.Common.UnitTests
+  - cmd: dotnet test .\src\Salesforce.Force.UnitTests
 
 after_build:
-    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Chatter
-    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Common
-    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
+  - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Chatter
+  - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Common
+  - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
 
 before_deploy:
-    - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+
+deploy:
+  - provider: NuGet
+    server: https://www.myget.org/F/sureshot-private/symbols/api/v2/package
+    api_key:
+      secure: D6hXA2KTEh6u3MNX/V6EMpdM+LNuLLCXSCCVwGgwtViKXjp/gp+1sMYfaHL43pKq
+    artifact: '*.nupkg'
+    on:
+      branch: master
