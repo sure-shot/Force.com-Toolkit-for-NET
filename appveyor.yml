@@ -1,6 +1,5 @@
 install:
     - cmd: dotnet restore .\src\Salesforce.Chatter
-    - cmd: dotnet restore .\src\Salesforce.Chatter.UnitTests
     - cmd: dotnet restore .\src\Salesforce.Common
     - cmd: dotnet restore .\src\Salesforce.Common.UnitTests
     - cmd: dotnet restore .\src\Salesforce.Force
@@ -8,14 +7,12 @@ install:
 
 build_script:
     - cmd: dotnet build -c Release .\src\Salesforce.Chatter
-    - cmd: dotnet build -c Release .\src\Salesforce.Chatter.UnitTests
     - cmd: dotnet build -c Release .\src\Salesforce.Common
     - cmd: dotnet build -c Release .\src\Salesforce.Common.UnitTests
     - cmd: dotnet build -c Release .\src\Salesforce.Force
     - cmd: dotnet build -c Release .\src\Salesforce.Force.UnitTests
 
 test_script:
-    - cmd: dotnet test .\src\Salesforce.Chatter.UnitTests
     - cmd: dotnet test .\src\Salesforce.Common.UnitTests
     - cmd: dotnet test .\src\Salesforce.Force.UnitTests
 
