@@ -16,12 +16,10 @@ test_script:
     - cmd: dotnet test .\src\Salesforce.Common.UnitTests
     - cmd: dotnet test .\src\Salesforce.Force.UnitTests
 
-before_deploy:
+after_build:
     - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Chatter
     - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Common
     - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
 
-deploy_script:
-    - cmd: nuget push .\nupkg\Salesforce.Chatter.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
-    - cmd: nuget push .\nupkg\Salesforce.Common.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
-    - cmd: nuget push .\nupkg\Salesforce.Force.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
+before_deploy:
+    - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
