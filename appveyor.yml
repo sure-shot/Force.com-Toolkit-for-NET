@@ -1,0 +1,27 @@
+install:
+    - cmd: dotnet restore .\src\Salesforce.Chatter
+    - cmd: dotnet restore .\src\Salesforce.Common
+    - cmd: dotnet restore .\src\Salesforce.Common.UnitTests
+    - cmd: dotnet restore .\src\Salesforce.Force
+    - cmd: dotnet restore .\src\Salesforce.Force.UnitTests
+
+build_script:
+    - cmd: dotnet build -c Release .\src\Salesforce.Chatter
+    - cmd: dotnet build -c Release .\src\Salesforce.Common
+    - cmd: dotnet build -c Release .\src\Salesforce.Common.UnitTests
+    - cmd: dotnet build -c Release .\src\Salesforce.Force
+    - cmd: dotnet build -c Release .\src\Salesforce.Force.UnitTests
+
+test_script:
+    - cmd: dotnet test .\src\Salesforce.Common.UnitTests
+    - cmd: dotnet test .\src\Salesforce.Force.UnitTests
+
+before_deploy:
+    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Chatter
+    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Common
+    - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
+
+deploy_script:
+    - cmd: nuget push .\nupkg\Salesforce.Chatter.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
+    - cmd: nuget push .\nupkg\Salesforce.Common.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
+    - cmd: nuget push .\nupkg\Salesforce.Force.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
