@@ -16,13 +16,11 @@ test_script:
   - cmd: dotnet test .\src\Salesforce.Common.UnitTests
   - cmd: dotnet test .\src\Salesforce.Force.UnitTests
 
-after_build:
+before_deploy:
   - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Chatter
   - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Common
   - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
-
-before_deploy:
-  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  - ps: Get-ChildItem .\nupkg\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy:
   - provider: NuGet
