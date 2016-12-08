@@ -117,3 +117,7 @@ artifacts
 
 # Windows Azure Publish Settings contain security keys for accessing your Windows Azure account
 .publishsettings
+
+project.lock.json
+src/.vs/
+nupkg/
