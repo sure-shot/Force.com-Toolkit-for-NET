@@ -27,6 +27,6 @@ deploy:
     server: https://www.myget.org/F/sureshot-private/symbols/api/v2/package
     api_key:
       secure: D6hXA2KTEh6u3MNX/V6EMpdM+LNuLLCXSCCVwGgwtViKXjp/gp+1sMYfaHL43pKq
-    artifact: '*.nupkg'
+    artifact: /.*\.nupkg/
     on:
       branch: master
