@@ -22,6 +22,6 @@ before_deploy:
     - cmd: dotnet pack -c Release -o .\nupkg .\src\Salesforce.Force
 
 deploy_script:
-    - cmd: nuget push .\nupkg\Salesforce.Chatter.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
-    - cmd: nuget push .\nupkg\Salesforce.Common.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
-    - cmd: nuget push .\nupkg\Salesforce.Force.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package
+    - cmd: nuget push .\nupkg\Salesforce.Chatter.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
+    - cmd: nuget push .\nupkg\Salesforce.Common.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
+    - cmd: nuget push .\nupkg\Salesforce.Force.1.0.0.nupkg %MYGET_TOKEN% -Source https://www.myget.org/F/sureshot-private/api/v2/package -NonInteractive
